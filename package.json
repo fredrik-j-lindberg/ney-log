@@ -4,27 +4,36 @@
   "description": "Logger package",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint",
-    "preversion" : "npm run lint"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Neylion/ney-log"
   },
-  "keywords": ["logging"],
+  "keywords": [
+    "logging"
+  ],
   "author": "Fredrik Lindberg",
   "license": "ISC",
   "devDependencies": {
+    "@types/events": "^3.0.0",
     "prettier": "^2.0.4",
     "tslint": "^6.1.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@neylion/request-context": "^1.0.1",
+    "events": "^3.1.0"
   }
 }
