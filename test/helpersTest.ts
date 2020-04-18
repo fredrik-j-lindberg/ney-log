@@ -39,7 +39,7 @@ describe("helperTests", () => {
         expect(elapsedTime).to.be.a("number");
         expect(elapsedTime).to.be.greaterThan(5);
         expect(elapsedTime).to.be.lessThan(50);
-      }, 5)
+      }, 6);
     });
     it("returns undefined if startTime value is not passed", () => {
       const elapsedTime = getElapsedTime(undefined);
