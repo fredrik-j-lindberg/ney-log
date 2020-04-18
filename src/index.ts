@@ -1,7 +1,7 @@
 "use strict";
 
 import { EventEmitter } from "events";
-import { getTimeStamp, getElapsedTime } from "./helpers";
+import { getTimestamp, getElapsedTime } from "./helpers";
 import { requestContext } from "@neylion/request-context";
 
 let initialized = false;
@@ -30,15 +30,17 @@ export enum Direction {
 }
 
 export function create(direction?: Direction) {
-  const setupLogMethod = (level: string) => (message: string, logDetails?: object, errorObject?: object) => {
-    if (!initialized) {
-      throw new Error("Logger package not initiated, please call the init method before attempting to log.");
-    }
-    if (requestContext.skipLogging) return;
-    message = direction ? `${direction} ${message}` : message;
-    const logData = assembleLogData(level, message, direction, logDetails, errorObject);
-    em.emit("newLog", logData);
-  };
+  const setupLogMethod = (level: string) => {
+    return function log(message: string, logDetails?: object, errorObject?: object) {
+      if (!initialized) {
+        throw new Error("Logger package not initiated, please call the init method before attempting to log.");
+      }
+      if (requestContext.skipLogging) return;
+      message = direction ? `${direction} ${message}` : message;
+      const logData = assembleLogData(level, message, direction, logDetails, errorObject);
+      em.emit("newLog", logData);
+    };
+  }
 
   return {
     fatal: setupLogMethod("fatal"),
@@ -68,8 +70,8 @@ function assembleLogData(
       path: requestContext.path,
     },
     error: errorObject,
-    timeStamp: getTimeStamp(),
-    msSinceRequestStart: requestContext.startTime ? getElapsedTime(requestContext.startTime) : undefined,
+    timeStamp: getTimestamp(new Date()),
+    msSinceRequestStart: getElapsedTime(requestContext.startTime),
   };
 
   return logData;

@@ -1,8 +1,6 @@
 "use strict";
 
-export function getTimeStamp() {
-  const timestamp = Date.now();
-  const date = new Date(timestamp);
+export function getTimestamp(date: Date) {
   const hours = date.getHours().toString().padStart(2, "0");
   const minutes = date.getMinutes().toString().padStart(2, "0");
   const seconds = date.getSeconds().toString().padStart(2, "0");
@@ -10,9 +8,9 @@ export function getTimeStamp() {
   return `${hours}:${minutes}:${seconds}.${milliseconds}`;
 }
 
-export function getElapsedTime(startTime: Date) {
+export function getElapsedTime(startTime?: Date) {
   if (!startTime) return undefined;
   const endTime = Date.now();
   const elapsedTime = endTime - startTime.getTime();
-  return elapsedTime / 1000;
+  return elapsedTime;
 }
