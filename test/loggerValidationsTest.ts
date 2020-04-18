@@ -8,6 +8,7 @@ describe("logger validation tests", () => {
   after(() => {
     resetLogger();
   });
+
   it("logging before init result in error", () => {
     expect(() => log.info("Test log")).to.throw();
   });

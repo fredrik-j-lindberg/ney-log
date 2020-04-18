@@ -1,8 +1,8 @@
 "use strict";
 
 import { EventEmitter } from "events";
-import { getTimestamp, getElapsedTime } from "./helpers";
 import { requestContext } from "@neylion/request-context";
+import { LogData } from "./LogData";
 
 let initialized = false;
 let em: EventEmitter;
@@ -53,31 +53,6 @@ function create(direction?: Direction) {
     info: setupLogMethod("info"),
     debug: setupLogMethod("debug"),
   };
-}
-
-class LogData {
-  message: string;
-  level: string;
-  direction?: string;
-  context?: object;
-  error?: object;
-  timestamp: string;
-  msSinceRequestStart?: number;
-  constructor(level: string, message: string, direction?: string, logDetails?: object, error?: object) {
-    this.message = message;
-    this.level = level;
-    this.direction = direction;
-    this.context = {
-      ...requestContext.additionalData,
-      ...logDetails,
-      correlationId: requestContext.correlationId,
-      callingClient: requestContext.callingClient,
-      path: requestContext.path,
-    };
-    this.error = error;
-    this.timestamp = getTimestamp(new Date());
-    this.msSinceRequestStart = getElapsedTime(requestContext.startTime);
-  }
 }
 
 function reset() {
