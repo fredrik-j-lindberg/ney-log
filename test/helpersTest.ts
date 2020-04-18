@@ -38,7 +38,7 @@ describe("helperTests", () => {
         const elapsedTime = getElapsedTime(date);
         expect(elapsedTime).to.be.a("number");
         expect(elapsedTime).to.be.greaterThan(5);
-        expect(elapsedTime).to.be.lessThan(10);
+        expect(elapsedTime).to.be.lessThan(50);
       }, 5)
     });
     it("returns undefined if startTime value is not passed", () => {
