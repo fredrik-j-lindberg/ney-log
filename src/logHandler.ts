@@ -35,13 +35,13 @@ const logOutbound = create(Direction.Outbound);
 
 function create(direction?: Direction) {
   const setupLogMethod = (level: string) => {
-    return function emitNewLog(message: string, logDetails?: object, errorObject?: object) {
+    return function emitNewLog(message: string, logDetails?: object, error?: object) {
       if (!initialized) {
         throw new Error("Logger package not initiated, please call the init method before attempting to log.");
       }
       if (requestContext.skipLogging) return;
       message = direction ? `${direction} ${message}` : message;
-      const logData = assembleLogData(level, message, direction, logDetails, errorObject);
+      const logData = new LogData(level, message, direction, logDetails, error);
       em.emit("newLog", logData);
     };
   };
@@ -55,30 +55,29 @@ function create(direction?: Direction) {
   };
 }
 
-function assembleLogData(
-  level: string,
-  message: string,
-  direction?: string,
-  logDetails?: object,
-  errorObject?: object,
-) {
-  const logData = {
-    message,
-    level,
-    direction,
-    context: {
+class LogData {
+  message: string;
+  level: string;
+  direction?: string;
+  context?: object;
+  error?: object;
+  timestamp: string;
+  msSinceRequestStart?: number;
+  constructor(level: string, message: string, direction?: string, logDetails?: object, error?: object) {
+    this.message = message;
+    this.level = level;
+    this.direction = direction;
+    this.context = {
       ...requestContext.additionalData,
       ...logDetails,
       correlationId: requestContext.correlationId,
       callingClient: requestContext.callingClient,
       path: requestContext.path,
-    },
-    error: errorObject,
-    timestamp: getTimestamp(new Date()),
-    msSinceRequestStart: getElapsedTime(requestContext.startTime),
-  };
-
-  return logData;
+    };
+    this.error = error;
+    this.timestamp = getTimestamp(new Date());
+    this.msSinceRequestStart = getElapsedTime(requestContext.startTime);
+  }
 }
 
 function reset() {

@@ -8,7 +8,8 @@ import sinon from "sinon";
 describe("logger tests", () => {
   after(() => {
     resetLogger();
-  })
+  });
+
   const logDelegates = [sinon.stub(), sinon.stub()];
   init(logDelegates);
   log.error("Testing");
