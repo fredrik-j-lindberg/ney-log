@@ -6,7 +6,7 @@ import { requestContext } from "@neylion/request-context";
 
 let initialized = false;
 let em: EventEmitter;
-export function init(delegates: CallableFunction[], eventEmitter?: EventEmitter) {
+export function init(delegates: (() => void)[], eventEmitter?: EventEmitter) {
   if (Object.keys(delegates).length <= 0) {
     throw new Error("Please provide at least one transform (log method to use).");
   }
@@ -15,7 +15,7 @@ export function init(delegates: CallableFunction[], eventEmitter?: EventEmitter)
   initialized = true;
 }
 
-function addDelegates(delegates: any[]) {
+function addDelegates(delegates: (() => void)[]) {
   delegates.forEach((callback) => {
     if (typeof callback !== "function") {
       throw Error(`Transform delegate was '${typeof callback}' instead of function.`);
@@ -24,14 +24,18 @@ function addDelegates(delegates: any[]) {
   });
 }
 
-export enum Direction {
+enum Direction {
   Inbound = "INBOUND",
   Outbound = "OUTBOUND",
 }
 
-export function create(direction?: Direction) {
+export const log = create();
+export const logInbound = create(Direction.Inbound);
+export const logOutbound = create(Direction.Outbound);
+
+function create(direction?: Direction) {
   const setupLogMethod = (level: string) => {
-    return function log(message: string, logDetails?: object, errorObject?: object) {
+    return function emitNewLog(message: string, logDetails?: object, errorObject?: object) {
       if (!initialized) {
         throw new Error("Logger package not initiated, please call the init method before attempting to log.");
       }
