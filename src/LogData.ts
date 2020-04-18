@@ -16,7 +16,7 @@ interface ILogDataContext {
   callingClient?: string;
   method?: string;
   path?: string;
-  [key: string]: any
+  [key: string]: any;
 }
 
 class LogData implements ILogData {
@@ -45,7 +45,4 @@ class LogData implements ILogData {
   }
 }
 
-export {
-  ILogData,
-  LogData
-}
+export { ILogData, LogData };
