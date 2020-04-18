@@ -29,6 +29,7 @@
     "@types/chai": "^4.2.11",
     "@types/events": "^3.0.0",
     "@types/mocha": "^7.0.2",
+    "@types/sinon": "^9.0.0",
     "chai": "^4.2.0",
     "mocha": "^7.1.1",
     "prettier": "^2.0.4",
@@ -40,6 +41,7 @@
   },
   "dependencies": {
     "@neylion/request-context": "^1.0.1",
-    "events": "^3.1.0"
+    "events": "^3.1.0",
+    "sinon": "^9.0.2"
   }
 }

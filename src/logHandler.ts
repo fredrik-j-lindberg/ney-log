@@ -74,7 +74,7 @@ function assembleLogData(
       path: requestContext.path,
     },
     error: errorObject,
-    timeStamp: getTimestamp(new Date()),
+    timestamp: getTimestamp(new Date()),
     msSinceRequestStart: getElapsedTime(requestContext.startTime),
   };
 
