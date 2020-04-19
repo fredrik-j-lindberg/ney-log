@@ -22,7 +22,6 @@ function create(direction?: string) {
         throw new Error("Logger package not initiated, please call the init method before attempting to log.");
       }
       if (requestContext.skipLogging) return;
-      message = direction ? `${direction} ${message}` : message;
       const logData = new LogData(level, message, direction, logDetails, error);
       eventHandler.emitLogEvent(logData);
     };
@@ -31,7 +30,7 @@ function create(direction?: string) {
   return {
     fatal: setupLogMethod("fatal"),
     error: setupLogMethod("error"),
-    warning: setupLogMethod("warning"),
+    warn: setupLogMethod("warn"),
     info: setupLogMethod("info"),
     debug: setupLogMethod("debug"),
   };
