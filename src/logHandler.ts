@@ -4,6 +4,7 @@ import { EventEmitter } from "events";
 import { EventHandler } from "./EventHandler";
 import { requestContext } from "@neylion/request-context";
 import { LogData } from "./LogData";
+import deepFreeze from "deep-freeze";
 
 let initialized = false;
 let eventHandler: EventHandler;
@@ -23,7 +24,7 @@ function create(direction?: string) {
       }
       if (requestContext.skipLogging) return;
       const logData = new LogData(level, message, direction, logDetails, error);
-      eventHandler.emitLogEvent(logData);
+      eventHandler.emitLogEvent(deepFreeze(logData));
     };
   };
 

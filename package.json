@@ -27,6 +27,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.2.11",
+    "@types/deep-freeze": "^0.1.2",
     "@types/events": "^3.0.0",
     "@types/mocha": "^7.0.2",
     "@types/sinon": "^9.0.0",
@@ -41,6 +42,7 @@
   },
   "dependencies": {
     "@neylion/request-context": "^1.0.1",
+    "deep-freeze": "0.0.1",
     "events": "^3.1.0",
     "sinon": "^9.0.2"
   }

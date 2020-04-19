@@ -2,28 +2,28 @@ import { getTimestamp, getElapsedTime } from "./helpers";
 import { requestContext } from "@neylion/request-context";
 
 interface ILogData {
-  message: string;
-  level: string;
-  direction?: string;
-  context?: ILogDataContext;
-  error?: object;
-  timestamp: string;
-  msSinceRequestStart?: number;
+  readonly message: string;
+  readonly level: string;
+  readonly direction?: string;
+  readonly context?: ILogDataContext;
+  readonly error?: object;
+  readonly timestamp: string;
+  readonly msSinceRequestStart?: number;
 }
 
 interface ILogDataContext {
-  correlationId?: string;
-  callingClient?: string;
-  method?: string;
-  path?: string;
-  [key: string]: any;
+  readonly correlationId?: string;
+  readonly callingClient?: string;
+  readonly method?: string;
+  readonly path?: string;
+  readonly [key: string]: any;
 }
 
 class LogData implements ILogData {
   message: string;
   level: string;
   direction?: string;
-  context?: object;
+  context?: ILogDataContext;
   error?: object;
   timestamp: string;
   msSinceRequestStart?: number;
