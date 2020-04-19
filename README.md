@@ -22,14 +22,14 @@ debug | log.debug(...) | Something happend that is likely not of much interest b
 ## Log Delegates
 When initializing the logger, you are required to provide an array of methods (delegates) that will do the actual logging. These delegates will be called, when a new log has been processed, with all the data relevant to that specific log.
 
-Here are two small examples on how you can set up your own log delegate method:<br>
-**Simply logging the whole logData object as json**
+Here are two small examples on how you can set up your own log delegate method:
+### Simply logging the whole logData object as json
 ```javascript
 function consoleLogger(logData){
   console.log(logData);
 }
 ```
-**Logging message after customizing it**
+### Logging message after customizing it
 ```javascript
 function consoleLogger(logData){
   // Customize message the way you want it
@@ -49,12 +49,12 @@ Property | Type | Explanation
 level | string | Log level (see section about log levels)
 direction | string *or* undefined | undefined when using the regular "log" object but is automatically set if you use the "logInbound" or "logOutbound" objects instead. Useful for being able to tell which logs that relate to the pipe in to the internal code, and which relate to the pipe between internal code and external calls.
 message | string | The message passed to the log method.
-logDetails | object *or* undefined | Object passed to log method containing useful context to the specific log entry.
+logDetails | object | Object passed to log method containing useful context to the specific log entry null (guarded to make sure it always returns empty object even if it is omitted in log).
 error | object *or* undefined | Error
 timestamp | string | Timestamp of log in format: ``hh:mm:ss.sss``
 requestContext | object | If you use the package [@neylion/request-context](https://github.com/Neylion/ney-request-context), useful request context is available on this object. See the following table for more details on this object.
 
-### RequestContext properties
+### requestContext properties
 Property | Type | Explanation
 ---------|------|------------
 msSinceStart | number *or* undefined | Milliseconds since request start.
