@@ -17,13 +17,14 @@ function reset() {
 }
 
 function create(direction?: string) {
+  // TODO: Make async
   const setupLogMethod = (level: string) => {
     return function emitLogEvent(message: string, error?: object, logDetails?: object) {
       if (!initialized) {
         throw new Error("Logger package not initiated, please call the init method before attempting to log.");
       }
       if (requestContext.skipLogging) return;
-      const logData = new LogData(level, message, direction, logDetails, error);
+      const logData = new LogData(level, message, direction, error, logDetails);
       eventHandler.emitLogEvent(deepFreeze(logData));
     };
   };

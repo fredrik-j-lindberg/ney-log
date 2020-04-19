@@ -26,7 +26,7 @@ describe("logger tests", () => {
     const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
     init(logDelegates);
     log.error("Testing", new Error("Testing error"));
-    const propertiesToCheck = ["message", "level", "direction", "context", "timestamp", "error"];
+    const propertiesToCheck = ["message", "level", "direction", "logDetails", "timestamp", "error"];
     expectCalledOnce(logDelegates);
     const logData = logDelegates[0].getCall(0).args[0];
 
@@ -61,24 +61,13 @@ describe("logger tests", () => {
     log.error("Testing");
     expectCalledOnce(logDelegates);
   });
-
-  it("manually set context properties is prioritized", () => {
-    const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
-    init(logDelegates);
-    const callingClient = "CallingClient";
-    log.info("Testing", undefined, { callingClient });
-    expectCalledOnce(logDelegates);
-    const logData = logDelegates[0].getCall(0).args[0];
-
-    expect(logData.context.callingClient).to.equal(callingClient);
-  });
 });
 
 function logDelegate(logData: ILogData) {
   // Shallow copying through spread operators makes it possible to copy, but to change nested objects we need to shallow copy those as well.
-  const test: any = { ...logData, context: { ...logData.context } };
+  const test: any = { ...logData, requestContext: { ...logData.requestContext } };
   test.message = "123456";
-  test.context.callingClient = "testclient";
+  test.requestContext.callingClient = "testclient";
 }
 
 function logDelegateChangeMessage(logData: any) {
@@ -86,7 +75,7 @@ function logDelegateChangeMessage(logData: any) {
 }
 
 function logDelegateChangeCallingClient(logData: any) {
-  logData.context.callingClient = "testclient";
+  logData.requestContext.callingClient = "testclient";
 }
 
 function expectCalledOnce(logDelegates: sinon.SinonStub<any[], any>[]) {

@@ -41,9 +41,5 @@ describe("helperTests", () => {
         expect(elapsedTime).to.be.lessThan(50);
       }, 6);
     });
-    it("returns undefined if startTime value is not passed", () => {
-      const elapsedTime = getElapsedTime(undefined);
-      expect(elapsedTime).to.be.undefined;
-    });
   });
 });

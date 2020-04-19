@@ -1,48 +1,32 @@
-import { getTimestamp, getElapsedTime } from "./helpers";
-import { requestContext } from "@neylion/request-context";
+import { getTimestamp } from "./helpers";
+import { RequestContext } from "./RequestContext";
 
 interface ILogData {
   readonly message: string;
   readonly level: string;
   readonly direction?: string;
-  readonly context?: ILogDataContext;
+  readonly logDetails: object;
   readonly error?: object;
   readonly timestamp: string;
-  readonly msSinceRequestStart?: number;
-}
-
-interface ILogDataContext {
-  readonly correlationId?: string;
-  readonly callingClient?: string;
-  readonly method?: string;
-  readonly path?: string;
-  readonly [key: string]: any;
+  readonly requestContext: RequestContext;
 }
 
 class LogData implements ILogData {
   message: string;
   level: string;
   direction?: string;
-  context?: ILogDataContext;
+  logDetails: object;
   error?: object;
   timestamp: string;
-  msSinceRequestStart?: number;
-  constructor(level: string, message: string, direction?: string, logDetails?: object, error?: object) {
-    this.message = message;
+  requestContext: RequestContext;
+  constructor(level: string, message: string, direction?: string, error?: object, logDetails?: object) {
     this.level = level;
     this.direction = direction;
-    this.context = {
-      ...requestContext.additionalData,
-      correlationId: requestContext.correlationId,
-      callingClient: requestContext.callingClient,
-      method: requestContext.method,
-      path: requestContext.path,
-      // Manually added log context added last to overwrite default values.
-      ...logDetails,
-    };
+    this.message = message;
+    this.logDetails = logDetails || {};
     this.error = error;
     this.timestamp = getTimestamp(new Date());
-    this.msSinceRequestStart = getElapsedTime(requestContext.startTime);
+    this.requestContext = new RequestContext();
   }
 }
 

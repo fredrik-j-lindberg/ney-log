@@ -8,8 +8,7 @@ export function getTimestamp(date: Date) {
   return `${hours}:${minutes}:${seconds}.${milliseconds}`;
 }
 
-export function getElapsedTime(startTime?: Date) {
-  if (!startTime) return undefined;
+export function getElapsedTime(startTime: Date) {
   const endTime = Date.now();
   const elapsedTime = endTime - startTime.getTime();
   return elapsedTime;
