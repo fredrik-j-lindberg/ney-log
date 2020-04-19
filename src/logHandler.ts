@@ -18,7 +18,7 @@ function reset() {
 
 function create(direction?: string) {
   const setupLogMethod = (level: string) => {
-    return function emitLogEvent(message: string, logDetails?: object, error?: object) {
+    return function emitLogEvent(message: string, error?: object, logDetails?: object) {
       if (!initialized) {
         throw new Error("Logger package not initiated, please call the init method before attempting to log.");
       }

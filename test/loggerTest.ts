@@ -7,24 +7,26 @@ import { expect, assert } from "chai";
 import sinon from "sinon";
 
 describe("logger tests", () => {
-  const getLogDelegateStub = () => { return sinon.stub().callsFake(logDelegate) };
+  const getLogDelegateStub = () => {
+    return sinon.stub().callsFake(logDelegate);
+  };
 
   afterEach(() => {
     resetLogger();
   });
 
   it("logDelegates are called once each", () => {
-    const logDelegates = [ getLogDelegateStub(), getLogDelegateStub() ];
+    const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
     init(logDelegates);
-    log.error("Testing")
+    log.error("Testing");
     expectCalledOnce(logDelegates);
   });
 
   it("logDelegates are called with correct parameters", () => {
-    const logDelegates = [ getLogDelegateStub(), getLogDelegateStub() ];
+    const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
     init(logDelegates);
-    log.error("Testing")
-    const propertiesToCheck = ["message", "level", "direction", "context", "timestamp"];
+    log.error("Testing", new Error("Testing error"));
+    const propertiesToCheck = ["message", "level", "direction", "context", "timestamp", "error"];
     expectCalledOnce(logDelegates);
     const logData = logDelegates[0].getCall(0).args[0];
 
@@ -32,10 +34,11 @@ describe("logger tests", () => {
       expect(logData).to.have.property(property);
       expect(logData[property], `Property '${property}'`).to.not.be.undefined;
     });
+    expect(logData.error).to.have.property("message");
   });
 
   it("logDelegates with copies of logData can manupulate it without affecting eachother", () => {
-    const logDelegates = [ getLogDelegateStub(), getLogDelegateStub() ];
+    const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
     init(logDelegates);
     const message = "Testing";
     log.error(message);
@@ -60,10 +63,10 @@ describe("logger tests", () => {
   });
 
   it("manually set context properties is prioritized", () => {
-    const logDelegates = [ getLogDelegateStub(), getLogDelegateStub() ];
+    const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
     init(logDelegates);
     const callingClient = "CallingClient";
-    log.error("Testing", { callingClient });
+    log.info("Testing", undefined, { callingClient });
     expectCalledOnce(logDelegates);
     const logData = logDelegates[0].getCall(0).args[0];
 
@@ -86,7 +89,7 @@ function logDelegateChangeCallingClient(logData: any) {
   logData.context.callingClient = "testclient";
 }
 
-function expectCalledOnce(logDelegates: sinon.SinonStub<any[], any>[]){
+function expectCalledOnce(logDelegates: sinon.SinonStub<any[], any>[]) {
   logDelegates.forEach((delegate) => {
     assert(delegate.calledOnce, `Log delegate was called ${delegate.callCount} instead of 1 times`);
   });
