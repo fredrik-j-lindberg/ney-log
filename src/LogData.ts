@@ -33,11 +33,12 @@ class LogData implements ILogData {
     this.direction = direction;
     this.context = {
       ...requestContext.additionalData,
-      ...logDetails,
       correlationId: requestContext.correlationId,
       callingClient: requestContext.callingClient,
       method: requestContext.method,
       path: requestContext.path,
+      // Manually added log context added last to overwrite default values.
+      ...logDetails,
     };
     this.error = error;
     this.timestamp = getTimestamp(new Date());
