@@ -1,6 +1,6 @@
 {
-  "name": "ney-log",
-  "version": "1.0.0",
+  "name": "@neylion/log",
+  "version": "1.0.1",
   "description": "Logger package",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

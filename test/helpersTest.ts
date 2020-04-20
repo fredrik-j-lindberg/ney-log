@@ -37,9 +37,9 @@ describe("helperTests", () => {
       setTimeout(() => {
         const elapsedTime = getElapsedTime(date);
         expect(elapsedTime).to.be.a("number");
-        expect(elapsedTime).to.be.greaterThan(5);
+        expect(elapsedTime).to.be.greaterThan(1);
         expect(elapsedTime).to.be.lessThan(50);
-      }, 6);
+      }, 10);
     });
   });
 });
