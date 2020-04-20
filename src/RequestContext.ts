@@ -8,7 +8,7 @@ class RequestContext {
   readonly path?: string;
   readonly startTimestamp?: string;
   readonly msSinceStart?: number;
-  constructor(){
+  constructor() {
     this.correlationId = requestContext.correlationId;
     this.callingClient = requestContext.callingClient;
     this.method = requestContext.method;
@@ -18,4 +18,4 @@ class RequestContext {
   }
 }
 
-export { RequestContext }
+export { RequestContext };

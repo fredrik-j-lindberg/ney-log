@@ -11,8 +11,8 @@ A logger package (built with backend APIs in mind) designed to handle logs and p
   - Logging: ``log.error("Message", errorObject, { metadata1: "Useful context", metadata2: "useful context" })``
 
 ## Log Levels
-Level | Method | General guidelines when to use
-------|--------|------------
+Level | Method         | General guidelines when to use
+------|----------------|--------------------------------
 fatal | log.fatal(...) | Something critical went wrong that is likely to warrent immediate attention.
 error | log.error(...) | Unexpected error was encountered that is likely something you should look into fixing.
 warn  | log.warn(...)  | Something unexpected/suboptimal happened that is likely something you should look into but does not require immediate attention.
