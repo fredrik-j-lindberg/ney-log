@@ -17,6 +17,9 @@ class EventHandler {
 }
 
 function addListeners(eventHandler: EventHandler, delegates: (() => void)[]) {
+  if (!Array.isArray(delegates)) {
+      throw new Error("Parameter for log delegates was not array.");
+  }
   if (Object.keys(delegates).length <= 0) {
     throw new Error("Please provide at least one delegate (log method to use).");
   }
