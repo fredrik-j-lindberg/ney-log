@@ -15,9 +15,9 @@ Level | Method | General guidelines when to use
 ------|--------|------------
 fatal | log.fatal(...) | Something critical went wrong that is likely to warrent immediate attention.
 error | log.error(...) | Unexpected error was encountered that is likely something you should look into fixing.
-warn | log.warn(...) | | Something unexpected/suboptimal happened that is likely something you should look into but does not require immediate attention.
-info | log.info(...) | Something happened that is likely to be good to know.
-debug | log.debug(...) | Something happend that is likely not of much interest but good to know when debugging the application more thoroughly.
+warn  | log.warn(...)  | Something unexpected/suboptimal happened that is likely something you should look into but does not require immediate attention.
+info  | log.info(...)  | Something happened that is likely to be good to know.
+debug | log.debug(...) | Something happend that is likely not of much interest but might be useful when debugging the application more thoroughly.
 
 ## Log Delegates
 When initializing the logger, you are required to provide an array of methods (delegates) that will do the actual logging. These delegates will be called, when a new log has been processed, with all the data relevant to that specific log.
