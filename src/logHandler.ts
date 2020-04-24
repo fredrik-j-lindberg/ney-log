@@ -1,9 +1,9 @@
 "use strict";
 
 import { EventEmitter } from "events";
-import { EventHandler } from "./EventHandler";
+import { EventHandler } from "./models/EventHandler";
 import { requestContext } from "@neylion/request-context";
-import { LogData } from "./LogData";
+import { LogData } from "./models/LogData";
 import deepFreeze from "deep-freeze";
 
 let initialized = false;

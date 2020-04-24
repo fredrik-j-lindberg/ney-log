@@ -1,5 +1,5 @@
 import { requestContext } from "@neylion/request-context";
-import { getTimestamp, getElapsedTime } from "./helpers";
+import { getTimestamp, getElapsedTime } from "../helpers";
 
 class RequestContext {
   readonly correlationId?: string;

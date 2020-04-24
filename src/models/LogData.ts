@@ -1,4 +1,4 @@
-import { getTimestamp } from "./helpers";
+import { getTimestamp } from "../helpers";
 import { RequestContext } from "./RequestContext";
 
 interface ILogData {

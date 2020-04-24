@@ -1,8 +1,8 @@
 "use strict";
 
 import "mocha";
-import { init, logInbound as log, reset as resetLogger } from "../src/logHandler";
-import { ILogData } from "../src/LogData";
+import { initLogger, logInbound as log, ILogData } from "../src/index";
+import { reset as resetLogger } from "../src/logHandler";
 import { expect, assert } from "chai";
 import sinon from "sinon";
 
@@ -17,14 +17,14 @@ describe("logger tests", () => {
 
   it("logDelegates are called once each", () => {
     const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
-    init(logDelegates);
+    initLogger(logDelegates);
     log.error("Testing");
     expectCalledOnce(logDelegates);
   });
 
   it("logDelegates are called with correct parameters", () => {
     const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
-    init(logDelegates);
+    initLogger(logDelegates);
     log.error("Testing", new Error("Testing error"));
     const propertiesToCheck = ["message", "level", "direction", "logDetails", "timestamp", "error"];
     expectCalledOnce(logDelegates);
@@ -39,7 +39,7 @@ describe("logger tests", () => {
 
   it("logDelegates with copies of logData can manupulate it without affecting eachother", () => {
     const logDelegates = [getLogDelegateStub(), getLogDelegateStub()];
-    init(logDelegates);
+    initLogger(logDelegates);
     const message = "Testing";
     log.error(message);
     const logData = logDelegates[0].getCall(0).args[0];
@@ -57,7 +57,7 @@ describe("logger tests", () => {
         expect(() => logDelegateChangeCallingClient(logData)).to.throw(/.*read only.*/);
       }),
     ];
-    init(logDelegates);
+    initLogger(logDelegates);
     log.error("Testing");
     expectCalledOnce(logDelegates);
   });

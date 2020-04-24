@@ -1,3 +1,3 @@
 "use strict";
 export { init as initLogger, log, logInbound, logOutbound } from "./logHandler";
-export { ILogData } from "./LogData";
+export { ILogData } from "./models/LogData";
